@@ -1,0 +1,34 @@
+1️⃣ Client request bhejta ha
+2️⃣ Controller receive karta hai
+Kya hota hai:
+
+JSON → User object ban jata hai
+Controller koi logic nahi likhta
+Direct Service ko pass karta hai
+
+Plain password "1234"
+BCrypt hash:
+$2a$10$.....
+Hashed password user me set
+
+Repository ko save ke liye bheja
+DB auto-generates id
+Hibernate updated entity return karta hai
+
+
+//2
+
+KEY CONCEPTS SUMMARY
+Controller
+    HTTP handle karta hai
+    JSON ↔ Java
+    Service call karta hai
+Service
+    Business logic
+    Security (BCrypt)
+    Validation
+Repository
+    Database access
+    Query generation
+Entity
+    DB table mapping

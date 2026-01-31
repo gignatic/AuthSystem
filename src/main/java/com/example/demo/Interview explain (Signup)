@@ -1,0 +1,69 @@
+SIGNUP FLOW (1-Minute Explanation)
+
+“In the signup flow, the client sends a POST /api/signup request with user details in JSON format.
+The controller receives the request and converts the JSON payload
+into a User entity using @RequestBody and delegates processing to the service layer.
+In the service layer, the plain-text password is securely hashed using
+BCryptPasswordEncoder, which is a one-way hashing algorithm with salting.
+The hashed password and user data are then persisted using Spring Data JPA.
+The repository internally uses Hibernate ORM to generate the SQL INSERT
+statement and save the entity in the database.
+Finally, the persisted entity with the generated primary key is returned to the client.”
+
+
+
+1️⃣ High-Level Architecture
+
+“My application follows a layered architecture with clear separation of concerns.”
+
+Client → Controller → Service → Repository → Database
+
+Controller layer handles HTTP requests and responses
+Service layer contains business logic
+Repository layer interacts with database using Spring Data JPA
+Entity layer maps Java objects to database tables using ORM
+
+
+2️⃣ Request Lifecycle – SIGNUP FLOW
+Step 1: Client sends HTTP request
+“The client sends a POST /api/signup request with JSON payload.”
+
+Step 2: Controller layer
+
+Technical explanation:
+@RestController marks the class as REST endpoint provider
+@PostMapping maps HTTP POST request
+@RequestBody uses Jackson ObjectMapper to convert JSON into a User object
+Controller delegates processing to Service layer (no business logic here)
+
+
+
+Step 3: Service layer (Business Logic)
+
+Technical explanation:
+
+Service layer applies business rules
+Password is hashed using BCryptPasswordEncoder
+BCrypt is a one-way hashing algorithm with salt
+Prevents rainbow-table attacks
+Hashed password is stored instead of plain text
+Service calls Repository to persist data
+
+Step 4: Repository layer
+
+Technical explanation:
+
+Repository extends JpaRepository
+Uses Spring Data JPA
+Spring automatically generates implementation at runtime
+Internally uses Hibernate ORM
+Hibernate converts entity to SQL:
+
+Database generates primary key (IDENTITY)
+Hibernate returns managed entity with generated ID
+
+Step 5: Response back to client
+
+Service returns persisted entity
+Controller returns it as JSON response
+Jackson serializes Java object → JSON

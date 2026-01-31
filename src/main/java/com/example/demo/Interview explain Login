@@ -1,0 +1,71 @@
+“In the login flow, the client sends a POST /api/login request with email and password.
+The controller forwards these credentials to the service layer.
+The service retrieves the user from the database using a derived query
+ method findByEmail, provided by Spring Data JPA.
+If the user exists, the service verifies the password using BCrypt’s
+ matches method, which compares the raw password with the stored hashed password.
+If authentication is successful, the service returns the user wrapped in an
+Optional; otherwise, it returns an empty Optional.
+The controller then sends the appropriate response indicating success or invalid credentials.”
+
+
+
+Step 1: Client sends login request
+
+Step 2: Controller delegates to service
+
+Technical explanation:
+Controller extracts email & password
+Uses Optional to safely handle absence of data
+Prevents NullPointerException
+
+
+Step 3: Service authentication logic
+
+Technical explanation:
+findByEmail is a derived query method
+Spring parses method name and creates JPQL query
+
+Step 4: Password verification
+
+Technical explanation:
+BCrypt extracts salt from stored hash
+Hashes input password using same salt
+Compares both hashes
+No plain-text password comparison
+
+Step 5: Authentication result
+
+Success → Optional.of(user)
+Failure → Optional.empty()
+Controller returns response based on Optional state
+
+
+///
+
+
+4️⃣ Role of Each Component (Interview Favorite)
+
+Entity
+
+Represents DB table
+Annotated with @Entity
+Managed by Hibernate
+
+Repository
+
+Data Access Layer
+Uses Spring Data JPA
+No SQL writing required
+
+Service
+
+Business logic layer
+Transaction boundary
+Security logic (password hashing)
+
+Controller
+
+Entry point for HTTP requests
+No business logic
+Converts request/response formats
