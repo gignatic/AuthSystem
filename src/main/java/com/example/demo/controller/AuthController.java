@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public User signup(@RequestBody User user){
-
+        System.out.println(user);
         return userService.signUp(user);
     }
 
